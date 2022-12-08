@@ -12,3 +12,10 @@ def ints(lst, neg, lines=False):
             matches = re.findall("\d+", itm)
         nums.append([int(s) for s in matches])
     return nums
+
+
+def mul(lst):
+    result = 1
+    for x in lst:
+        result *= x
+    return result
