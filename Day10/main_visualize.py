@@ -24,8 +24,9 @@ def clock():
     if (cycle - 20) % 40 == 0:
         total += cycle * x_val
     cycle += 1
-    waiting_time = max(0.03, (250 - cycle) / (500 * (cycle // 20 + 1)))
-    wait(waiting_time)
+    wait(0.05)
+    # waiting_time = max(0.03, (250 - cycle) / (500 * (cycle // 20 + 1)))
+    # wait(waiting_time)
 
 
 def execute(line):
@@ -89,7 +90,7 @@ def output_stuff(output):
 line = ""
 print("\n" * 30)
 output_stuff(get_raw_output(show_grid=False))
-wait(2.5)
+wait(1)
 for line in puz_in:
     execute(line)
 # print(total)
