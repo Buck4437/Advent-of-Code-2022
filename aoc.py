@@ -42,3 +42,18 @@ def __merge(l1, l2, comparator):
             lst.append(l2.pop(0))
     return lst + l1 + l2
 
+
+def vec_add(v1, v2):
+    return tuple([sum(x) for x in zip(v1, v2)])
+
+
+def line(start, end):
+    r1, c1 = start
+    r2, c2 = end
+    r_min, r_max = min(r1, r2), max(r1, r2)
+    c_min, c_max = min(c1, c2), max(c1, c2)
+    coords = []
+    for r in range(r_min, r_max+1):
+        for c in range(c_min, c_max+1):
+            coords.append((r, c))
+    return coords
