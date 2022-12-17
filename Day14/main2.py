@@ -9,20 +9,20 @@ def parse_coord(str_coord):
     return tuple(map(int, str_coord.split(",")))[::-1]
 
 
-rocks = defaultdict(lambda: False)
+rocks = set()
 # For visualization only
-stationary_sand = defaultdict(lambda: False)
+stationary_sand = set()
 for path in s.split("\n"):
     sections = [parse_coord(x) for x in path.split(" -> ")]
     for i in range(len(sections) - 1):
         for rock in line(sections[i], sections[i+1]):
-            rocks[rock] = True
+            rocks.add(rock)
 
 
 def has_block(pos):
     if pos[0] >= floor:
         return True
-    return rocks[pos]
+    return pos in rocks
 
 
 floor = max([rock[0] for rock in rocks]) + 2
@@ -44,8 +44,8 @@ while True:
             break
     if sand_pos[0] >= floor:
         break
-    rocks[sand_pos] = True
-    stationary_sand[sand_pos] = True
+    rocks.add(sand_pos)
+    stationary_sand.add(sand_pos)
     count += 1
 
 
@@ -53,11 +53,11 @@ print(count)
 
 
 def lookup(r, c):
-    if stationary_sand[(r, c)]:
+    if (r, c) in stationary_sand:
         return "o"
     if (r, c) == (0, 500):
         return "+"
-    if rocks[(r, c)]:
+    if (r, c) in rocks:
         return "#"
     return "."
 

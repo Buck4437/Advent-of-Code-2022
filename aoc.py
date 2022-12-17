@@ -47,6 +47,14 @@ def vec_add(v1, v2):
     return tuple([sum(x) for x in zip(v1, v2)])
 
 
+def vec_mul(v, k):
+    return tuple([x * k for x in v])
+
+
+def vecs_add(vectors, v2):
+    return tuple([vec_add(vector, v2) for vector in vectors])
+
+
 def line(start, end):
     r1, c1 = start
     r2, c2 = end
