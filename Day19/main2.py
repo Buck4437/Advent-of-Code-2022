@@ -5,6 +5,7 @@ with open("input2.txt") as f:
 
 datas = ints(s, False, True)
 
+
 def maximize(datas, inv, robots, time, banned_bot=None):
 
     if banned_bot is None:
@@ -76,7 +77,7 @@ def maximize(datas, inv, robots, time, banned_bot=None):
             clone_inv[ingredient] -= amount
         clone_robots[robot_type] += 1
         results.append(maximize(datas, clone_inv, clone_robots, time - 1))
-        if robot_type == "geode" and robot_type == "obsidian":
+        if robot_type == "geode" or robot_type == "obsidian":
             break
 
     results.append(maximize(datas, new_inv, new_robots, time - 1, set(can_be_produced)))
@@ -92,4 +93,3 @@ for data in datas:
     print(data[0], result)
     best *= result
 print(best)
-
