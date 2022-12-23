@@ -4,14 +4,16 @@ with open("input.txt") as f:
     s = "\n".join([line.replace("\n", "") for line in f])
 
 
-def get_neigh():
-    neighs = []
-    for x in range(-1, 2):
-        for y in range(-1, 2):
-            if x == y == 0:
-                continue
-            neighs.append((x, y))
-    return neighs
+vec_neighbours = [
+    (-1, -1),
+    (-1, 0),
+    (-1, 1),
+    (0, -1),
+    (0, 1),
+    (1, -1),
+    (1, 0),
+    (1, 1)
+]
 
 
 # Mid is always the vector of movement
@@ -32,14 +34,15 @@ for r, row in enumerate(s.split("\n")):
         if char == "#":
             elves.add((r, c))
 
-round = 0
+rounds = 0
 while True:
-    round += 1
+    rounds += 1
     proposed = {}
-    all_pos = []
+    repeated = set()
+    all_pos = set()
     all_unmoved = True
     for elf in elves:
-        for pos in vecs_add(get_neigh(), elf):
+        for pos in vecs_add(vec_neighbours, elf):
             if pos in elves:
                 break
         # No elves
@@ -54,19 +57,21 @@ while True:
             else:
                 position = vec_add(checks[card][1], elf)
                 proposed[elf] = position
-                all_pos.append(position)
+                if position in all_pos:
+                    repeated.add(position)
+                else:
+                    all_pos.add(position)
                 all_unmoved = False
                 break
         else:
             proposed[elf] = elf
     if all_unmoved:
-        print("Answer:", round)
+        print("Answer:", rounds)
         break
-    if round % 10 == 0:
-        print(round)
+    if rounds % 10 == 0:
+        print(rounds)
 
     new_elves = set()
-    repeated = [x for x in set(all_pos) if all_pos.count(x) > 1]
     for elf, new_pos in proposed.items():
         if new_pos not in repeated:
             new_elves.add(new_pos)
@@ -74,5 +79,3 @@ while True:
             new_elves.add(elf)
     elves = new_elves
     orders = orders[1:] + orders[0]
-
-
